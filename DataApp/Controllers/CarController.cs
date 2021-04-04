@@ -45,7 +45,23 @@ namespace DataApp.Controllers
 VALUES(null, @region, @price, @year, @manufacturer, @model, @condition, @cylinders, @fuel, @odometer, @title_status, @transmission, @VIN, @drive, @size, @type, @paint_color, @state, @posting_date);
             ", car);
 
+            // get latest inserted car id
+            var rowId = conn.QuerySingle<int>("select max(RowId) from Main.CarsDB");
+            car.RowId = rowId;
             return car;
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public bool Delete(int id)
+        {
+            using var conn = new MySqlConnection(connection);
+            var rowsDeleted = conn.Execute(@"delete from Main.CarsDB where RowId = @id", new
+            {
+                id
+            });
+
+            return rowsDeleted > 0;
         }
     }
 }
