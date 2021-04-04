@@ -8,7 +8,7 @@ namespace DataApp.Models
         public string region { get; set; }
         public long? price { get; set; }
         public int? year { get; set; }
-        public string manufactorer { get; set; }
+        public string manufacturer { get; set; }
         public string model { get; set; }
         public string condition { get; set; }
         public string cylinders { get; set; }
