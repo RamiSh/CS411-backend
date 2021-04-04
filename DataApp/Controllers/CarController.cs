@@ -55,8 +55,8 @@ namespace DataApp.Controllers
             using var conn = new MySqlConnection(connection);
             car.posting_date = DateTime.Now;
             var rowsInserted = conn.Execute(@"INSERT INTO Main.CarsDB
-(id, region, price, `year`, manufacturer, model, `condition`, cylinders, fuel, odometer, title_status, transmission, VIN, drive, `size`, `type`, paint_color, state, posting_date)
-VALUES(null, @region, @price, @year, @manufacturer, @model, @condition, @cylinders, @fuel, @odometer, @title_status, @transmission, @VIN, @drive, @size, @type, @paint_color, @state, @posting_date);
+(region, price, `year`, manufacturer, model, `condition`, cylinders, fuel, odometer, title_status, transmission, VIN, drive, `size`, `type`, paint_color, state, posting_date)
+VALUES(@region, @price, @year, @manufacturer, @model, @condition, @cylinders, @fuel, @odometer, @title_status, @transmission, @VIN, @drive, @size, @type, @paint_color, @state, @posting_date);
             ", car);
 
             // get latest inserted car id
