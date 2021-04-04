@@ -28,8 +28,35 @@
             <summary>
             Deletes a car from the Main.CarsDB by car id.
             </summary>
-            <param name="id"></param>
+            <param name="id">the car id (Rowid) in the database.</param>
             <returns>boolean whether the car has been deleted.</returns>
+        </member>
+        <member name="M:DataApp.Controllers.UserController.Get">
+            <summary>
+            Returns all users from the Main.Users table.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DataApp.Controllers.UserController.Get(System.Int32)">
+            <summary>
+            Returns a user from the Main.Users by user id.
+            </summary>
+            <param name="id">the user id (UserId) in the database.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataApp.Controllers.UserController.Post(DataApp.Models.User)">
+            <summary>
+            Adds a new user to the Main.Users table.
+            </summary>
+            <param name="car"></param>
+            <returns>Returns the user with the UserId populated.</returns>
+        </member>
+        <member name="M:DataApp.Controllers.UserController.Delete(System.Int32)">
+            <summary>
+            Deletes a user from the Main.Users by user id.
+            </summary>
+            <param name="id">the user id (UserID) in the database.</param>
+            <returns>boolean whether the user has been deleted.</returns>
         </member>
     </members>
 </doc>
