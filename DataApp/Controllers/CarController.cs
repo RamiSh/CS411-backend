@@ -3,6 +3,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using Dapper;
+using DataApp.Models;
+using System;
+
 namespace DataApp.Controllers
 {
     [ApiController]
@@ -12,41 +15,37 @@ namespace DataApp.Controllers
         string connection = "SERVER=127.0.0.1;PORT=3306;UID=root;DATABASE=Main";
 
         [HttpGet]
-        public List<dynamic> Get()
+        public List<Car> Get()
         {
             using var conn = new MySqlConnection(connection);
-            var cars = conn.Query<dynamic>("select * from CarsDB limit 5").ToList();
+            var cars = conn.Query<Car>("select * from CarsDB limit 5").ToList();
             return cars;
         }
 
         [HttpGet]
         [Route("{id}")]
-        public List<dynamic> Get(long id )
+        public List<Car> Get(long id )
         {
             using var conn = new MySqlConnection(connection);
-            var cars = conn.Query<dynamic>("select * from CarsDB where id = @id", new
+            var cars = conn.Query<Car>("select * from CarsDB where RowId = @id", new
             {
                 id
             }).ToList();
             return cars;
         }
-    }
 
-    public class Car
-    {
-        public int Id { get; set; }
-        public string Make { get; set; }
-        public string Vin { get; set; }
-        public int Year { get; set; }
-    }
+        [HttpPost]
+        [Route("")]
+        public Car Post(Car car)
+        {
+            using var conn = new MySqlConnection(connection);
+            car.posting_date = DateTime.Now;
+            var rowsInserted = conn.Execute(@"INSERT INTO Main.CarsDB
+(id, region, price, `year`, manufacturer, model, `condition`, cylinders, fuel, odometer, title_status, transmission, VIN, drive, `size`, `type`, paint_color, state, posting_date)
+VALUES(null, @region, @price, @year, @manufacturer, @model, @condition, @cylinders, @fuel, @odometer, @title_status, @transmission, @VIN, @drive, @size, @type, @paint_color, @state, @posting_date);
+            ", car);
 
-    public enum MakeType
-    {
-        Toyota,
-        Honda,
-        Audi,
-        BMW,
-        Cadillac,
-        Chevrolet
+            return car;
+        }
     }
 }
