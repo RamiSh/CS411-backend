@@ -10,10 +10,14 @@ namespace DataApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CarController : Controller
+    public class CarController : ControllerBase
     {
         string connection = "SERVER=127.0.0.1;PORT=3306;UID=root;DATABASE=Main";
 
+        /// <summary>
+        /// A demo endpoint that returns the first 5 cars from the Main.CarsDB table.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public List<Car> Get()
         {
@@ -22,6 +26,11 @@ namespace DataApp.Controllers
             return cars;
         }
 
+        /// <summary>
+        /// Returns a car from the Main.CarsDB by car id.
+        /// </summary>
+        /// <param name="id">the car id (Rowid) in the database.</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         public List<Car> Get(long id )
@@ -34,6 +43,11 @@ namespace DataApp.Controllers
             return cars;
         }
 
+        /// <summary>
+        /// Adds a new car to the Main.CarsDB table.
+        /// </summary>
+        /// <param name="car"></param>
+        /// <returns>Returns the car with the rowid populated.</returns>
         [HttpPost]
         [Route("")]
         public Car Post(Car car)
@@ -51,6 +65,11 @@ VALUES(null, @region, @price, @year, @manufacturer, @model, @condition, @cylinde
             return car;
         }
 
+        /// <summary>
+        /// Deletes a car from the Main.CarsDB by car id.
+        /// </summary>
+        /// <param name="id">the car id (Rowid) in the database.</param>
+        /// <returns>boolean whether the car has been deleted.</returns>
         [HttpDelete]
         [Route("{id}")]
         public bool Delete(int id)

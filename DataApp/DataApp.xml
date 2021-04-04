@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DataApp</name>
+    </assembly>
+    <members>
+        <member name="M:DataApp.Controllers.CarController.Get">
+            <summary>
+            A demo endpoint that returns the first 5 cars from the Main.CarsDB table.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DataApp.Controllers.CarController.Get(System.Int64)">
+            <summary>
+            Returns a car from the Main.CarsDB by car id.
+            </summary>
+            <param name="id">the car id (Rowid) in the database.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataApp.Controllers.CarController.Post(DataApp.Models.Car)">
+            <summary>
+            Adds a new car to the Main.CarsDB table.
+            </summary>
+            <param name="car"></param>
+            <returns>Returns the car with the rowid populated.</returns>
+        </member>
+        <member name="M:DataApp.Controllers.CarController.Delete(System.Int32)">
+            <summary>
+            Deletes a car from the Main.CarsDB by car id.
+            </summary>
+            <param name="id"></param>
+            <returns>boolean whether the car has been deleted.</returns>
+        </member>
+    </members>
+</doc>
