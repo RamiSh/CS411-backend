@@ -6,7 +6,7 @@ using Dapper;
 namespace DataApp.Controllers
 {
     [ApiController]
-    [Route("")]
+    [Route("[controller]")]
     public class CarController : Controller
     {
         string connection = "SERVER=127.0.0.1;PORT=3306;UID=root;DATABASE=Main";
@@ -19,7 +19,17 @@ namespace DataApp.Controllers
             return cars;
         }
 
-
+        [HttpGet]
+        [Route("{id}")]
+        public List<dynamic> Get(long id )
+        {
+            using var conn = new MySqlConnection(connection);
+            var cars = conn.Query<dynamic>("select * from CarsDB where id = @id", new
+            {
+                id
+            }).ToList();
+            return cars;
+        }
     }
 
     public class Car
