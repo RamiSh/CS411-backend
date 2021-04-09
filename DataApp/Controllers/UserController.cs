@@ -53,8 +53,7 @@ namespace DataApp.Controllers
         {
             using var conn = new MySqlConnection(connection);
             var rowsInserted = conn.Execute(@"INSERT INTO Main.Users
-(Username, Password, email) VALUES(@Username, @Password, @email);
-            ", user);
+(Username, Password, email) VALUES(@Username, @Password, @email);", user);
 
             // get latest inserted car id
             var rowId = conn.QuerySingle<int>("select max(UserID) from Main.Users");
