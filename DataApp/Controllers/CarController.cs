@@ -33,7 +33,7 @@ namespace DataApp.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
-        public List<Car> Get(long id )
+        public List<Car> Get(long id)
         {
             using var conn = new MySqlConnection(connection);
             var cars = conn.Query<Car>("select * from CarsDB where RowId = @id", new
@@ -41,6 +41,41 @@ namespace DataApp.Controllers
                 id
             }).ToList();
             return cars;
+        }
+
+        /// <summary>
+        /// Update an existing car's details in the Main.CarsDB table.
+        /// </summary>
+        /// <param name="car">The updated car details</param>
+        /// <returns>Returns the car after being updated.</returns>
+        [HttpPut]
+        [Route("")]
+        public Car Update([FromBody] Car car)
+        {
+            using var conn = new MySqlConnection(connection);
+            var updatedRows = conn.Execute(@"update Main.CarsDB set
+                                                            region = @region,
+                                                            price = @price,
+                                                            `year` = @year,
+                                                            manufacturer = @manufacturer,
+                                                            model = @model,
+                                                            `condition` = @condition, 
+                                                            cylinders = @cylinders, 
+                                                            fuel = @fuel, 
+                                                            odometer = @odometer, 
+                                                            title_status = @title_status, 
+                                                            transmission = @transmission, 
+                                                            VIN = @VIN, 
+                                                            drive = @drive, 
+                                                            `size` = @size, 
+                                                            `type` = @type, 
+                                                            paint_color = @paint_color, 
+                                                            state = @state, 
+                                                            posting_date = @posting_date 
+                                                        where RowId= @RowId", 
+                                                        car);
+
+            return car;
         }
 
         /// <summary>

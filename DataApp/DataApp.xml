@@ -17,6 +17,13 @@
             <param name="id">the car id (Rowid) in the database.</param>
             <returns></returns>
         </member>
+        <member name="M:DataApp.Controllers.CarController.Update(DataApp.Models.Car)">
+            <summary>
+            Update an existing car's details in the Main.CarsDB table.
+            </summary>
+            <param name="car">The updated car details</param>
+            <returns>Returns the car after being updated.</returns>
+        </member>
         <member name="M:DataApp.Controllers.CarController.Post(DataApp.Models.Car)">
             <summary>
             Adds a new car to the Main.CarsDB table.
