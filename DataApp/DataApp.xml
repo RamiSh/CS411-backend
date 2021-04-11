@@ -19,7 +19,7 @@
         </member>
         <member name="M:DataApp.Controllers.CarController.Update(DataApp.Models.Car)">
             <summary>
-            Update an existing car's details in the Main.CarsDB table.
+            Updates an existing car's details in the Main.CarsDB table.
             </summary>
             <param name="car">The updated car details</param>
             <returns>Returns the car after being updated.</returns>
@@ -37,6 +37,14 @@
             </summary>
             <param name="id">the car id (Rowid) in the database.</param>
             <returns>boolean whether the car has been deleted.</returns>
+        </member>
+        <member name="M:DataApp.Controllers.CarController.Search(DataApp.Models.CarSearchParameters)">
+            <summary>
+            Searchs the Main.CarsDB by any combination of manufacturer, model, and condition. This will return the first 10 cars.
+            </summary>
+            <remarks>If more than one search value is used the query will use the AND operator to filter results.</remarks>
+            <param name="carSearchParameters"></param>
+            <returns></returns>
         </member>
         <member name="M:DataApp.Controllers.UserController.Get">
             <summary>

@@ -44,7 +44,7 @@ namespace DataApp.Controllers
         }
 
         /// <summary>
-        /// Update an existing car's details in the Main.CarsDB table.
+        /// Updates an existing car's details in the Main.CarsDB table.
         /// </summary>
         /// <param name="car">The updated car details</param>
         /// <returns>Returns the car after being updated.</returns>
@@ -72,7 +72,7 @@ namespace DataApp.Controllers
                                                             paint_color = @paint_color, 
                                                             state = @state, 
                                                             posting_date = @posting_date 
-                                                        where RowId= @RowId", 
+                                                        where RowId= @RowId",
                                                         car);
 
             return car;
@@ -116,6 +116,34 @@ VALUES(@region, @price, @year, @manufacturer, @model, @condition, @cylinders, @f
             });
 
             return rowsDeleted > 0;
+        }
+
+        /// <summary>
+        /// Searchs the Main.CarsDB by any combination of manufacturer, model, and condition. This will return the first 10 cars.
+        /// </summary>
+        /// <remarks>If more than one search value is used the query will use the AND operator to filter results.</remarks>
+        /// <param name="carSearchParameters"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("search")]
+        public List<Car> Search([FromQuery] CarSearchParameters carSearchParameters)
+        {
+            using var conn = new MySqlConnection(connection);
+            var query = $"select * from CarsDB where {carSearchParameters.AsSearchQuery()} limit 10";
+            Console.WriteLine(query);
+
+            var cars = conn.Query<Car>(query,
+                new
+                {
+                    manufacturer = "%" + carSearchParameters.manufacturer.ToLower() + "%",
+                    condition = "%" + carSearchParameters.condition.ToLower() + "%",
+                    model = "%" + carSearchParameters.model.ToLower() + "%"
+
+                }).ToList();
+
+            Console.WriteLine(carSearchParameters);
+
+            return cars;
         }
     }
 }
