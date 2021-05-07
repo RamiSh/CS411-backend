@@ -78,5 +78,20 @@ namespace DataApp.Controllers
 
             return rowsDeleted > 0;
         }
+
+        /// <summary>
+        /// Authenticats a user using its username and password
+        /// </summary>
+        /// <param name="request">a request that contains the username and password</param>
+        /// <returns>boolean whether the user has been authenticated.</returns>
+        [HttpPost]
+        [Route("authenticate")]
+        public bool Authenticate([FromBody] UserAuthenticationRequest request)
+        {
+            using var conn = new MySqlConnection(connection);
+            var userExists = conn.QuerySingleOrDefault<User>("select * from Main.Users where UserName = @UserName and Password = @Password",
+                request);
+            return userExists != null ? true : false;
+        }
     }
 }
