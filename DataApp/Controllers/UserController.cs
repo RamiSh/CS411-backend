@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using DataApp.Models;
@@ -92,6 +93,50 @@ namespace DataApp.Controllers
             var userExists = conn.QuerySingleOrDefault<User>("select * from Main.Users where UserName = @UserName and Password = @Password",
                 request);
             return userExists != null ? true : false;
+        }
+
+
+        /// <summary>
+        /// Links a car to a user. This is a transactional process, if any part of the workflow fails the
+        /// database transaction will rollback.
+        /// </summary>
+        /// <param name="car">car's details</param>
+        /// <param name="id">user id</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("{id}/owns")]
+        public IActionResult Owns([FromBody] Car car, int id)
+        {
+            using var conn = new MySqlConnection(connection);
+            conn.Open();
+            var trnx = conn.BeginTransaction();
+
+            try
+            {
+                var carInserted = conn.Execute(Car.AsInsertQuery(), car);
+                var rowId = conn.QuerySingle<int>("select max(RowId) from Main.CarsDB");
+
+                var ownsInserted = conn.Execute(
+                    @"insert into Main.Owns 
+                            (UserID, CarID, PriceBought, DateBought)
+                            VALUES(@id, @carId, @priceBought, @dateBought)",
+                new
+                {
+                    id = id,
+                    carId = rowId,
+                    priceBought = car.price,
+                    dateBought = car.posting_date
+                });
+                trnx.Commit();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                trnx.Rollback();
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }

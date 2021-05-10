@@ -89,10 +89,7 @@ namespace DataApp.Controllers
         {
             using var conn = new MySqlConnection(connection);
             car.posting_date = DateTime.Now;
-            var rowsInserted = conn.Execute(@"INSERT INTO Main.CarsDB
-(region, price, `year`, manufacturer, model, `condition`, cylinders, fuel, odometer, title_status, transmission, VIN, drive, `size`, `type`, paint_color, state, posting_date)
-VALUES(@region, @price, @year, @manufacturer, @model, @condition, @cylinders, @fuel, @odometer, @title_status, @transmission, @VIN, @drive, @size, @type, @paint_color, @state, @posting_date);
-            ", car);
+            var rowsInserted = conn.Execute(Car.AsInsertQuery(), car);
 
             // get latest inserted car id
             var rowId = conn.QuerySingle<int>("select max(RowId) from Main.CarsDB");

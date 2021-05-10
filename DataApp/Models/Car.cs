@@ -23,5 +23,17 @@ namespace DataApp.Models
         public string paint_color { get; set; }
         public string state { get; set; }
         public DateTime posting_date { get; set; }
+
+        /// <summary>
+        /// Generates an insert statement
+        /// </summary>
+        /// <returns></returns>
+        public static string AsInsertQuery()
+        {
+            return @"INSERT INTO Main.CarsDB
+(region, price, `year`, manufacturer, model, `condition`, cylinders, fuel, odometer, title_status, transmission, VIN, drive, `size`, `type`, paint_color, state, posting_date)
+VALUES(@region, @price, @year, @manufacturer, @model, @condition, @cylinders, @fuel, @odometer, @title_status, @transmission, @VIN, @drive, @size, @type, @paint_color, @state, @posting_date);";
+        }
     }
+
 }

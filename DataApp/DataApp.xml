@@ -80,5 +80,20 @@
             <param name="request">a request that contains the username and password</param>
             <returns>boolean whether the user has been authenticated.</returns>
         </member>
+        <member name="M:DataApp.Controllers.UserController.Owns(DataApp.Models.Car,System.Int32)">
+            <summary>
+            Links a car to a user. This is a transactional process, if any part of the workflow fails the
+            database transaction will rollback.
+            </summary>
+            <param name="car">car's details</param>
+            <param name="id">user id</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataApp.Models.Car.AsInsertQuery">
+            <summary>
+            Generates an insert statement
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>
