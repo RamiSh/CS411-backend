@@ -129,7 +129,7 @@ namespace DataApp.Controllers
                 });
                 trnx.Commit();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 trnx.Rollback();
@@ -137,6 +137,28 @@ namespace DataApp.Controllers
             }
 
             return Ok();
+        }
+
+        /// <summary>
+        /// Retrieves all cars that owned by a user.
+        /// </summary>
+        /// <param name="id">The user id to get cars for</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{id}/cars")]
+        public IEnumerable<Car> Cars(int id)
+        {
+            using var conn = new MySqlConnection(connection);
+            var cars = conn.Query<Car>(@"select c.*
+                                            from Main.CarsDB c
+                                            inner join Main.Owns o on c.RowId = o.CarID 
+                                            where o.userID = @userId",
+                param: new
+                {
+                    userId = id
+                });
+
+            return cars;
         }
     }
 }

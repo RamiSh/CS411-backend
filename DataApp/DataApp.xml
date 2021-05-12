@@ -89,6 +89,13 @@
             <param name="id">user id</param>
             <returns></returns>
         </member>
+        <member name="M:DataApp.Controllers.UserController.Cars(System.Int32)">
+            <summary>
+            Retrieves all cars that owned by a user.
+            </summary>
+            <param name="id">The user id to get cars for</param>
+            <returns></returns>
+        </member>
         <member name="M:DataApp.Models.Car.AsInsertQuery">
             <summary>
             Generates an insert statement
