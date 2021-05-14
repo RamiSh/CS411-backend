@@ -46,6 +46,30 @@
             <param name="carSearchParameters"></param>
             <returns></returns>
         </member>
+        <member name="M:DataApp.Controllers.SellController.PostQuestion(System.Int64,System.String)">
+            <summary>
+            Addes a new questions to a listing. If listing does not exist yet in the mongo db, it will create a new document for it
+            </summary>
+            <param name="listingId"></param>
+            <param name="question"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DataApp.Controllers.SellController.PostReply(System.Int64,System.Int64,System.String)">
+            <summary>
+            Addes a reply to a question on a listing
+            </summary>
+            <param name="listingId"></param>
+            <param name="questionId"></param>
+            <param name="reply"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DataApp.Controllers.SellController.Get(System.Int64)">
+            <summary>
+            Display all questions and their replies for a listing
+            </summary>
+            <param name="listingId"></param>
+            <returns></returns>
+        </member>
         <member name="M:DataApp.Controllers.UserController.Get">
             <summary>
             Returns all users from the Main.Users table.
