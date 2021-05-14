@@ -9,7 +9,8 @@ namespace DataApp.Controllers
     [Route("[controller]")]
     public class SellController : Controller
     {
-        string connection = "mongodb://mongouser:mongo123@sp21-cs411-26.cs.illinois.edu:27017/?authSource=carsmongodb&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+        string mongoConnection = "mongodb://mongouser:mongo123@sp21-cs411-26.cs.illinois.edu:27017/?authSource=carsmongodb&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+        string connection = "SERVER=127.0.0.1;PORT=3306;UID=root;DATABASE=Main";
 
         /// <summary>
         /// Addes a new questions to a listing. If listing does not exist yet in the mongo db, it will create a new document for it
@@ -21,7 +22,7 @@ namespace DataApp.Controllers
         [Route("{listingId}")]
         public QuestionObject PostQuestion(long listingId, string question)
         {
-            var conn = new MongoClient(connection);
+            var conn = new MongoClient(mongoConnection);
             var db = conn.GetDatabase("carsmongodb");
             var questionsCollection = db.GetCollection<QuestionDocument>("qna");
 
@@ -80,7 +81,7 @@ namespace DataApp.Controllers
 
         public QuestionObject PostReply(long listingId, long questionId, string reply)
         {
-            var conn = new MongoClient(connection);
+            var conn = new MongoClient(mongoConnection);
             var db = conn.GetDatabase("carsmongodb");
             var questionsCollection = db.GetCollection<QuestionDocument>("qna");
             var listing = questionsCollection.Find(q => q.ListingId == listingId).FirstOrDefault();
@@ -116,7 +117,7 @@ namespace DataApp.Controllers
         [Route("{listingId}")]
         public QuestionDocument Get(long listingId)
         {
-            var conn = new MongoClient(connection);
+            var conn = new MongoClient(mongoConnection);
             var db = conn.GetDatabase("carsmongodb");
             var questionsCollection = db.GetCollection<QuestionDocument>("qna");
             return questionsCollection.Find(q => q.ListingId == listingId).FirstOrDefault();
